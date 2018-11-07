@@ -28,6 +28,10 @@ final class InvalidArgumentException extends \InvalidArgumentException
             return 'Argument %s passed to %s must be an instance of %s, %s given, called in %s on line %s';
         }
 
+        if ($expected == 'callable') {
+            return 'Argument %s passed to %s must be %s, %s given, called in %s on line %s';
+        }
+
         return 'Argument %s passed to %s must be of the type %s, %s given, called in %s on line %s';
     }
 }

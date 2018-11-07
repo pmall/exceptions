@@ -25,6 +25,10 @@ final class UnexpectedValueException extends \UnexpectedValueException
             return 'Return value of %s must be an instance of %s, %s returned';
         }
 
+        if ($expected == 'callable') {
+            return 'Return value of %s must be %s, %s returned';
+        }
+
         return 'Return value of %s must be of the type %s, %s returned';
     }
 }

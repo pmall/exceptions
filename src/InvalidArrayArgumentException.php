@@ -29,6 +29,10 @@ final class InvalidArrayArgumentException extends \InvalidArgumentException
             return 'Argument %s passed to %s must be an array containing only instances of %s, %s given for key %s, called in %s on line %s';
         }
 
+        if ($expected == 'callable') {
+            return 'Argument %s passed to %s must be an array containing only %s values, %s given for key %s, called in %s on line %s';
+        }
+
         return 'Argument %s passed to %s must be an array containing only values of the type %s, %s given for key %s, called in %s on line %s';
     }
 }
