@@ -12,7 +12,7 @@ final class ArgumentCountError extends \ArgumentCountError
 
         $method = new Method($bt[1]);
 
-        $msg = sprintf($tpl, $method, $given, $bt[1]['file'], $bt[1]['line'], $expected);
+        $msg = sprintf($tpl, $method, $given, $bt[1]['file'] ?? '', $bt[1]['line'] ?? '', $expected);
 
         parent::__construct($msg, 0, $previous);
     }

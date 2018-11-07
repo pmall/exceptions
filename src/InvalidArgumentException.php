@@ -13,7 +13,7 @@ final class InvalidArgumentException extends \InvalidArgumentException
         $type = new Type($expected, $given);
         $method = new Method($bt[1]);
 
-        $msg = sprintf($tpl, $position, $method, $expected, $type, $bt[1]['file'], $bt[1]['line']);
+        $msg = sprintf($tpl, $position, $method, $expected, $type, $bt[1]['file'] ?? '', $bt[1]['line'] ?? '');
 
         parent::__construct($msg, 0, $previous);
     }

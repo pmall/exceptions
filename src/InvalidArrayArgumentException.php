@@ -14,7 +14,7 @@ final class InvalidArrayArgumentException extends \InvalidArgumentException
         $invalid = new InvalidArray($expected, $values);
         [$key, $type] = $invalid->first();
 
-        $msg = sprintf($tpl, $position, $method, $expected, $type, $key, $bt[1]['file'], $bt[1]['line']);
+        $msg = sprintf($tpl, $position, $method, $expected, $type, $key, $bt[1]['file'] ?? '', $bt[1]['line'] ?? '');
 
         parent::__construct($msg, 0, $previous);
     }
