@@ -1,0 +1,29 @@
+{
+    "name": "quanta/exceptions",
+    "type": "library",
+    "description": "Common exceptions for quanta packages",
+    "keywords": [],
+    "license": "MIT",
+    "homepage": "https://github.com/quanta/exceptions",
+    "support": {
+        "issues": "https://github.com/quanta/exceptions/issues",
+        "source": "https://github.com/quanta/exceptions"
+    },
+    "authors": [
+        {
+            "name": "pmall",
+            "email": "pierre.mallinjoud@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "kahlan/kahlan": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Quanta\\Exceptions\\": "src"
+        }
+    }
+}
