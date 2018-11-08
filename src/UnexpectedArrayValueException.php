@@ -4,7 +4,7 @@ namespace Quanta\Exceptions;
 
 final class UnexpectedArrayValueException extends \UnexpectedValueException
 {
-    public function __construct(string $source, string $expected, array $values, Throwable $previous = null)
+    public function __construct(string $source, string $expected, array $values)
     {
         $tpl = $this->tpl($expected);
 
@@ -13,7 +13,7 @@ final class UnexpectedArrayValueException extends \UnexpectedValueException
 
         $msg = sprintf($tpl, $source, $expected, $type, $key);
 
-        parent::__construct($msg, 0, $previous);
+        parent::__construct($msg);
     }
 
     private function tpl(string $expected): string

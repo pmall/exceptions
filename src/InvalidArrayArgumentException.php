@@ -4,7 +4,7 @@ namespace Quanta\Exceptions;
 
 final class InvalidArrayArgumentException extends \InvalidArgumentException
 {
-    public function __construct(int $position, string $expected, array $values, Throwable $previous = null)
+    public function __construct(int $position, string $expected, array $values)
     {
         $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
@@ -16,7 +16,7 @@ final class InvalidArrayArgumentException extends \InvalidArgumentException
 
         $msg = sprintf($tpl, $position, $method, $expected, $type, $key, $bt[1]['file'] ?? '', $bt[1]['line'] ?? '');
 
-        parent::__construct($msg, 0, $previous);
+        parent::__construct($msg);
     }
 
     private function tpl(string $expected): string

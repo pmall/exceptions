@@ -4,7 +4,7 @@ namespace Quanta\Exceptions;
 
 final class UnexpectedValueException extends \UnexpectedValueException
 {
-    public function __construct(string $source, string $expected, $given, Throwable $previous = null)
+    public function __construct(string $source, string $expected, $given)
     {
         $tpl = $this->tpl($expected);
 
@@ -12,7 +12,7 @@ final class UnexpectedValueException extends \UnexpectedValueException
 
         $msg = sprintf($tpl, $source, $expected, $type);
 
-        parent::__construct($msg, 0, $previous);
+        parent::__construct($msg);
     }
 
     private function tpl(string $expected): string

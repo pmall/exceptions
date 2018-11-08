@@ -4,7 +4,7 @@ namespace Quanta\Exceptions;
 
 final class ArgumentCountError extends \ArgumentCountError
 {
-    public function __construct(int $expected, int $given, Throwable $previous = null)
+    public function __construct(int $expected, int $given)
     {
         $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
@@ -14,6 +14,6 @@ final class ArgumentCountError extends \ArgumentCountError
 
         $msg = sprintf($tpl, $method, $given, $bt[1]['file'] ?? '', $bt[1]['line'] ?? '', $expected);
 
-        parent::__construct($msg, 0, $previous);
+        parent::__construct($msg);
     }
 }
