@@ -32,24 +32,18 @@ final class InvalidArrayArgumentException extends \InvalidArgumentException
     {
         if (interface_exists($expected)) {
             return self::$testing
-                ? 'Argument %s passed to x must be an array containing only objects implementing interface %s, %s given for key %s'
-                : 'Argument %s passed to %s must be an array containing only objects implementing interface %s, %s given for key %s, called in %s on line %s';
+                ? 'Argument %s passed to x must be an array of objects implementing interface %s, %s given for key %s'
+                : 'Argument %s passed to %s must be an array of objects implementing interface %s, %s given for key %s, called in %s on line %s';
         }
 
         if (class_exists($expected)) {
             return self::$testing
-                ? 'Argument %s passed to x must be an array containing only instances of %s, %s given for key %s'
-                : 'Argument %s passed to %s must be an array containing only instances of %s, %s given for key %s, called in %s on line %s';
-        }
-
-        if ($expected == 'callable') {
-            return self::$testing
-                ? 'Argument %s passed to x must be an array containing only %s values, %s given for key %s'
-                : 'Argument %s passed to %s must be an array containing only %s values, %s given for key %s, called in %s on line %s';
+                ? 'Argument %s passed to x must be an array of %s instances, %s given for key %s'
+                : 'Argument %s passed to %s must be an array of %s instances, %s given for key %s, called in %s on line %s';
         }
 
         return self::$testing
-            ? 'Argument %s passed to x must be an array containing only values of the type %s, %s given for key %s'
-            : 'Argument %s passed to %s must be an array containing only values of the type %s, %s given for key %s, called in %s on line %s';
+            ? 'Argument %s passed to x must be an array of %s values, %s given for key %s'
+            : 'Argument %s passed to %s must be an array of %s values, %s given for key %s, called in %s on line %s';
     }
 }

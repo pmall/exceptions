@@ -19,17 +19,13 @@ final class UnexpectedArrayValueException extends \UnexpectedValueException
     private function tpl(string $expected): string
     {
         if (interface_exists($expected)) {
-            return 'Return value of %s must be an array containing only objects implementing interface %s, %s returned for key %s';
+            return 'Return value of %s must be an array of objects implementing interface %s, %s returned for key %s';
         }
 
         if (class_exists($expected)) {
-            return 'Return value of %s must be an array containing only instances of %s, %s returned for key %s';
+            return 'Return value of %s must be an array of %s instances, %s returned for key %s';
         }
 
-        if ($expected == 'callable') {
-            return 'Return value of %s must be an array containing only %s values, %s returned for key %s';
-        }
-
-        return 'Return value of %s must be an array containing only values of the type %s, %s returned for key %s';
+        return 'Return value of %s must be an array of %s values, %s returned for key %s';
     }
 }
