@@ -4,16 +4,27 @@ namespace Quanta\Exceptions;
 
 final class ArgumentCountError extends \ArgumentCountError
 {
+    private static $testing = false;
+
+    public static function testing()
+    {
+        self::$testing = true;
+    }
+
     public function __construct(int $expected, int $given)
     {
         $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
-        $tpl = 'Too few arguments to function %s, %s passed in %s on line %s and exactly %s expected';
+        $tpl = self::$testing
+            ? 'Too few arguments to function x, %s passed and exactly %s expected'
+            : 'Too few arguments to function %s, %s passed in %s on line %s and exactly %s expected';
 
-        $method = new Method($bt[1]);
+        if (! self::$testing) $xs[] = new Method($bt[1]);
+        $xs[] = $given;
+        if (! self::$testing) $xs[] = $bt[1]['file'];
+        if (! self::$testing) $xs[] = $bt[1]['line'];
+        $xs[] = $expected;
 
-        $msg = sprintf($tpl, $method, $given, $bt[1]['file'] ?? '', $bt[1]['line'] ?? '', $expected);
-
-        parent::__construct($msg);
+        parent::__construct(vsprintf($tpl, $xs));
     }
 }
