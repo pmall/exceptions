@@ -8,11 +8,11 @@ final class UnexpectedValueException extends \UnexpectedValueException
     {
         $tpl = $this->tpl($expected);
 
-        $type = new Type($expected, $given);
+        $xs[] = $source;
+        $xs[] = $expected;
+        $xs[] = new Type($expected, $given);
 
-        $msg = sprintf($tpl, $source, $expected, $type);
-
-        parent::__construct($msg);
+        parent::__construct(vsprintf($tpl, $xs));
     }
 
     private function tpl(string $expected): string

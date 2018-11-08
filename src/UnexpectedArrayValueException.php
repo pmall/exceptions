@@ -8,12 +8,12 @@ final class UnexpectedArrayValueException extends \UnexpectedValueException
     {
         $tpl = $this->tpl($expected);
 
-        $invalid = new InvalidArray($expected, $values);
-        [$key, $type] = $invalid->first();
+        $xs[] = $source;
+        $xs[] = $expected;
+        $xs[] = new InvalidType($expected, $values);
+        $xs[] = new InvalidKey($expected, $values);
 
-        $msg = sprintf($tpl, $source, $expected, $type, $key);
-
-        parent::__construct($msg);
+        parent::__construct(vsprintf($tpl, $xs));
     }
 
     private function tpl(string $expected): string

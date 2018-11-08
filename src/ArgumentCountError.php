@@ -15,9 +15,7 @@ final class ArgumentCountError extends \ArgumentCountError
     {
         $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
-        $tpl = self::$testing
-            ? 'Too few arguments to function x, %s passed and exactly %s expected'
-            : 'Too few arguments to function %s, %s passed in %s on line %s and exactly %s expected';
+        $tpl = $this->tpl();
 
         if (! self::$testing) $xs[] = new Method($bt[1]);
         $xs[] = $given;
@@ -26,5 +24,12 @@ final class ArgumentCountError extends \ArgumentCountError
         $xs[] = $expected;
 
         parent::__construct(vsprintf($tpl, $xs));
+    }
+
+    private function tpl(): string
+    {
+        return self::$testing
+            ? 'Too few arguments to function x, %s passed and exactly %s expected'
+            : 'Too few arguments to function %s, %s passed in %s on line %s and exactly %s expected';
     }
 }

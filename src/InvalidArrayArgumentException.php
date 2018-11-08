@@ -17,14 +17,11 @@ final class InvalidArrayArgumentException extends \InvalidArgumentException
 
         $tpl = $this->tpl($expected);
 
-        $invalid = new InvalidArray($expected, $values);
-        [$key, $type] = $invalid->first();
-
         $xs[] = $position;
         if (! self::$testing) $xs[] = new Method($bt[1]);
         $xs[] = $expected;
-        $xs[] = $type;
-        $xs[] = $key;
+        $xs[] = new InvalidType($expected, $values);
+        $xs[] = new InvalidKey($expected, $values);
         if (! self::$testing) $xs[] = $bt[1]['file'];
         if (! self::$testing) $xs[] = $bt[1]['line'];
 
