@@ -2,9 +2,14 @@
 
 namespace Quanta\Exceptions;
 
-final class InvalidArgumentException extends \InvalidArgumentException
+final class ArgumentTypeErrorMessage
 {
     private static $testing = false;
+
+    private $bt;
+    private $position;
+    private $expected;
+    private $given;
 
     public static function testing()
     {
@@ -15,33 +20,39 @@ final class InvalidArgumentException extends \InvalidArgumentException
     {
         $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
-        $tpl = $this->tpl($expected);
-
-        $xs[] = $position;
-        if (! self::$testing) $xs[] = new Method($bt[1]);
-        $xs[] = $expected;
-        $xs[] = new Type($expected, $given);
-        if (! self::$testing) $xs[] = $bt[1]['file'];
-        if (! self::$testing) $xs[] = $bt[1]['line'];
-
-        parent::__construct(vsprintf($tpl, $xs));
+        $this->bt = $bt[1];
+        $this->position = $position;
+        $this->expected = $expected;
+        $this->given = $given;
     }
 
-    private function tpl(string $expected): string
+    public function __toString()
     {
-        if (interface_exists($expected)) {
+        $xs[] = $this->position;
+        if (! self::$testing) $xs[] = new Method($this->bt);
+        $xs[] = $this->expected;
+        $xs[] = new Type($this->expected, $this->given);
+        if (! self::$testing) $xs[] = $this->bt['file'];
+        if (! self::$testing) $xs[] = $this->bt['line'];
+
+        return vsprintf($this->tpl(), $xs);
+    }
+
+    private function tpl(): string
+    {
+        if (interface_exists($this->expected)) {
             return self::$testing
                 ? 'Argument %s passed to x must implement interface %s, %s given'
                 : 'Argument %s passed to %s must implement interface %s, %s given, called in %s on line %s';
         }
 
-        if (class_exists($expected)) {
+        if (class_exists($this->expected)) {
             return self::$testing
                 ? 'Argument %s passed to x must be an instance of %s, %s given'
                 : 'Argument %s passed to %s must be an instance of %s, %s given, called in %s on line %s';
         }
 
-        if ($expected == 'callable') {
+        if ($this->expected == 'callable') {
             return self::$testing
                 ? 'Argument %s passed to x must be %s, %s given'
                 : 'Argument %s passed to %s must be %s, %s given, called in %s on line %s';

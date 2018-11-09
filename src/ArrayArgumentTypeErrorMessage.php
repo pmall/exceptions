@@ -2,9 +2,14 @@
 
 namespace Quanta\Exceptions;
 
-final class InvalidArrayArgumentException extends \InvalidArgumentException
+final class ArrayArgumentTypeErrorMessage
 {
     private static $testing = false;
+
+    private $bt;
+    private $position;
+    private $expected;
+    private $values;
 
     public static function testing()
     {
@@ -15,28 +20,34 @@ final class InvalidArrayArgumentException extends \InvalidArgumentException
     {
         $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
-        $tpl = $this->tpl($expected);
-
-        $xs[] = $position;
-        if (! self::$testing) $xs[] = new Method($bt[1]);
-        $xs[] = $expected;
-        $xs[] = new InvalidType($expected, $values);
-        $xs[] = new InvalidKey($expected, $values);
-        if (! self::$testing) $xs[] = $bt[1]['file'];
-        if (! self::$testing) $xs[] = $bt[1]['line'];
-
-        parent::__construct(vsprintf($tpl, $xs));
+        $this->bt = $bt[1];
+        $this->position = $position;
+        $this->expected = $expected;
+        $this->values = $values;
     }
 
-    private function tpl(string $expected): string
+    public function __toString()
     {
-        if (interface_exists($expected)) {
+        $xs[] = $this->position;
+        if (! self::$testing) $xs[] = new Method($this->bt);
+        $xs[] = $this->expected;
+        $xs[] = new InvalidType($this->expected, $this->values);
+        $xs[] = new InvalidKey($this->expected, $this->values);
+        if (! self::$testing) $xs[] = $this->bt['file'];
+        if (! self::$testing) $xs[] = $this->bt['line'];
+
+        return vsprintf($this->tpl(), $xs);
+    }
+
+    private function tpl(): string
+    {
+        if (interface_exists($this->expected)) {
             return self::$testing
                 ? 'Argument %s passed to x must be an array of objects implementing interface %s, %s given for key %s'
                 : 'Argument %s passed to %s must be an array of objects implementing interface %s, %s given for key %s, called in %s on line %s';
         }
 
-        if (class_exists($expected)) {
+        if (class_exists($this->expected)) {
             return self::$testing
                 ? 'Argument %s passed to x must be an array of %s instances, %s given for key %s'
                 : 'Argument %s passed to %s must be an array of %s instances, %s given for key %s, called in %s on line %s';

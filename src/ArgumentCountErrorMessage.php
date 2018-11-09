@@ -2,9 +2,13 @@
 
 namespace Quanta\Exceptions;
 
-final class ArgumentCountError extends \ArgumentCountError
+final class ArgumentCountErrorMessage
 {
     private static $testing = false;
+
+    private $bt;
+    private $expected;
+    private $given;
 
     public static function testing()
     {
@@ -15,15 +19,20 @@ final class ArgumentCountError extends \ArgumentCountError
     {
         $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
-        $tpl = $this->tpl();
+        $this->bt = $bt[1];
+        $this->expected = $expected;
+        $this->given = $given;
+    }
 
-        if (! self::$testing) $xs[] = new Method($bt[1]);
-        $xs[] = $given;
-        if (! self::$testing) $xs[] = $bt[1]['file'];
-        if (! self::$testing) $xs[] = $bt[1]['line'];
-        $xs[] = $expected;
+    public function __toString()
+    {
+        if (! self::$testing) $xs[] = new Method($this->bt);
+        $xs[] = $this->given;
+        if (! self::$testing) $xs[] = $this->bt['file'];
+        if (! self::$testing) $xs[] = $this->bt['line'];
+        $xs[] = $this->expected;
 
-        parent::__construct(vsprintf($tpl, $xs));
+        return vsprintf($this->tpl(), $xs);
     }
 
     private function tpl(): string

@@ -1,7 +1,7 @@
 {
     "name": "quanta/exceptions",
     "type": "library",
-    "description": "Common exceptions for quanta packages",
+    "description": "Common exception error messages for quanta packages",
     "keywords": [],
     "license": "MIT",
     "homepage": "https://github.com/quanta/exceptions",
