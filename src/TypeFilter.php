@@ -4,23 +4,23 @@ namespace Quanta\Exceptions;
 
 final class TypeFilter
 {
-    private $expected;
+    private $type;
 
-    public function __construct(string $expected)
+    public function __construct(string $type)
     {
-        $this->expected = $expected;
+        $this->type = $type;
     }
 
     public function __invoke($value)
     {
-        if (interface_exists($this->expected) || class_exists($this->expected)) {
-            return ! $value instanceof $this->expected;
+        if (interface_exists($this->type) || class_exists($this->type)) {
+            return $value instanceof $this->type;
         }
 
-        if ($this->expected == 'callable') {
-            return ! is_callable($value);
+        if ($this->type == 'callable') {
+            return is_callable($value);
         }
 
-        return gettype($value) !== $this->expected;
+        return gettype($value) == $this->type;
     }
 }

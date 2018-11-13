@@ -4,21 +4,23 @@ namespace Quanta\Exceptions;
 
 final class InvalidType
 {
-    private $expected;
+    private $type;
     private $values;
 
-    public function __construct(string $expected, array $values)
+    public function __construct(string $type, array $values)
     {
-        $this->expected = $expected;
+        $this->type = $type;
         $this->values = $values;
     }
 
     public function __toString()
     {
-        $invalid = array_filter($this->values, new TypeFilter($this->expected));
+        $valid = array_filter($this->values, new TypeFilter($this->type));
+
+        $invalid = array_diff_key($this->values, $valid);
 
         $value = current($invalid);
 
-        return (string) new Type($this->expected, $value);
+        return (string) new Type($this->type, $value);
     }
 }
