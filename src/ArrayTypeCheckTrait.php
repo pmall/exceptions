@@ -13,6 +13,6 @@ trait ArrayTypeCheckTrait
      */
     private function areAllTypedAs(array $values, string $type): bool
     {
-        return count(array_filter($values), new TypeFilter($type)) == 0;
+        return count(array_filter($values, new TypeFilter($type))) == 0;
     }
 }
