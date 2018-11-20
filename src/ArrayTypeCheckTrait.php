@@ -2,6 +2,8 @@
 
 namespace Quanta\Exceptions;
 
+use Quanta\Callbacks\Every;
+
 trait ArrayTypeCheckTrait
 {
     /**
