@@ -16,7 +16,8 @@
         }
     ],
     "require": {
-        "php": ">=7.0"
+        "php": ">=7.0",
+        "quanta/callbacks": "^0.2.0"
     },
     "require-dev": {
         "kahlan/kahlan": "^4.0"

@@ -2,7 +2,7 @@
 
 namespace Quanta\Exceptions;
 
-final class TypeFilter
+final class TypedAs
 {
     private $type;
 
