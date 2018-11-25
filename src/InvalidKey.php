@@ -2,8 +2,6 @@
 
 namespace Quanta\Exceptions;
 
-use Quanta\Callbacks\Not;
-
 final class InvalidKey
 {
     private $type;
@@ -17,7 +15,9 @@ final class InvalidKey
 
     public function __toString()
     {
-        $invalid = array_filter($this->values, new Not(new TypedAs($this->type)));
+        $valid = array_filter($this->values, new TypedAs($this->type));
+
+        $invalid = array_diff_key($this->values, $valid);
 
         $key = key($invalid);
 

@@ -2,19 +2,17 @@
 
 namespace Quanta\Exceptions;
 
-use Quanta\Callbacks\Every;
-
 trait ArrayTypeCheckTrait
 {
     /**
      * Return whether all the values of the given array match the given type.
      *
-     * @param array     $values
      * @param string    $type
+     * @param array     $values
      * @return bool
      */
-    private function areAllTypedAs(array $values, string $type): bool
+    private function areAllTypedAs(string $type, array $values): bool
     {
-        return (new Every(new TypedAs($type)))($values);
+        return count($values) == count(array_filter($values, new TypedAs($type)));
     }
 }
