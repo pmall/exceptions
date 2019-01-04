@@ -24,6 +24,9 @@
     "autoload": {
         "psr-4": {
             "Quanta\\Exceptions\\": "src"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     }
 }
