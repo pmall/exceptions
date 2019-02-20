@@ -4,10 +4,10 @@
     "description": "Common exception error messages for quanta packages",
     "keywords": [],
     "license": "MIT",
-    "homepage": "https://github.com/quanta/exceptions",
+    "homepage": "https://github.com/quantaphp/exceptions",
     "support": {
-        "issues": "https://github.com/quanta/exceptions/issues",
-        "source": "https://github.com/quanta/exceptions"
+        "issues": "https://github.com/quantaphp/exceptions/issues",
+        "source": "https://github.com/quantaphp/exceptions"
     },
     "authors": [
         {
@@ -15,6 +15,9 @@
             "email": "pierre.mallinjoud@gmail.com"
         }
     ],
+    "config": {
+        "sort-packages": true
+    },
     "require": {
         "php": ">=7.0"
     },
